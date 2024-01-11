@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import { ReactComponent as ProductDefault } from '../icons/product-default.svg';
+import { ReactComponent as IconProductDefault } from '../icons/product-default.svg';
 import { ReactComponent as Plus } from '../icons/plus.svg';
 import { ReactComponent as Minus } from '../icons/minus.svg';
 import { ReactComponent as Heart } from '../icons/heart.svg';
 import { ReactComponent as HeartFilled } from '../icons/heart_filled.svg';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import DetailOfProduct from '../../pages/DetailOfProduct';
+import { useNavigate } from 'react-router-dom';
 import useCart from "../../hooks/useCart";
 import { LightTooltip } from "../LightTooltip/LightTooltip";
 
@@ -28,7 +27,7 @@ const ProductsItem = ({ product }) => {
   }
 
   const navigateToDetail = () => {
-    navigate(`/product`);
+    navigate(`/product/${product._id}`);
   };
 
   return (
@@ -44,9 +43,10 @@ const ProductsItem = ({ product }) => {
                     onClick={navigateToDetail}
                     src={product.image}
                     alt={product.name}
+                    style={{position: !product.image ? '' : 'absolute'}}
                 />
             ) : (
-                <ProductDefault onLoad={() => setLoading(false)} onClick={navigateToDetail} />
+                <IconProductDefault onLoad={() => setLoading(false)} onClick={navigateToDetail} />
             )}
 
             {loading && <div className='blank' onClick={navigateToDetail}/>}

@@ -17,7 +17,7 @@ export default function Products({ title }) {
   );
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error :(</p>;
+  if (isError) return <p>Error :</p>;
 
   var settings = {
     dots: false,
