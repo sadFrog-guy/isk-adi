@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReactComponent as TrashIcon } from '../icons/Trash Bin.svg';
 import BasketItem from '../UI/BasketItem/BasketItem.jsx';
 import Ava from '../icons/Кухонные.svg';
@@ -8,10 +8,14 @@ import {useDispatch, useSelector} from "react-redux";
 
 const BasketContent = () => {
   const dispatcher = useDispatch();
-  const { cart } = useSelector(state => state.cart);
+  const { cart, prices, len, lenString } = useSelector(state => state.cart);
   const [click, setclick] = useState(false);
-  const { basket } = UseBasket();
-  console.log(basket);
+
+  useEffect(() => {
+    dispatcher.cart.countPrices()
+    dispatcher.cart.countLenString()
+    dispatcher.cart.countLen()
+  }, [])
 
   const openAsk = () => {
     setclick(true);
@@ -56,16 +60,25 @@ const BasketContent = () => {
             <div className='orders_left'>
               <p>Сумма заказа:</p>
               <div className='images'>
-                <img src={Ava} alt='#' className='a' />
-                <img src={Ava} alt='#' className='b' />
-                <img src={Ava} alt='#' className='c' />
-                <img src={Ava} alt='#' className='d' />
-                <img src={Ava} alt='#' className='e' />
+                {[...Array(len)].map((_, id) => {
+                  const zIndex = id === len ? len : len - 1; // Check if it's the first element
+                  const left = 20 * id; // Increase left by 20px each iteration
+
+                  return (
+                    <img
+                      key={id}
+                      src={Ava}
+                      alt='#'
+                      className='a'
+                      style={{ zIndex, left }}
+                    />
+                  );
+                })}
               </div>
             </div>
             <div className='orders_right'>
-              <h4>3600 сом</h4>
-              <p>6 товаров</p>
+              <h4>{prices} сом</h4>
+              <p>{lenString}</p>
             </div>
           </div>
           <div className='line'></div>
@@ -82,11 +95,11 @@ const BasketContent = () => {
           <div className='quantity'>
             <p>
               <span className='first'>Кол-во товаров:</span>
-              <span className='second'>3</span>
+              <span className='second'>{lenString}</span>
             </p>
             <p>
               <span className='third'>Общая сумма:</span>
-              <span className='fourth'>999999</span>
+              <span className='fourth'>{prices} сом</span>
             </p>
             <button>Оформить заказ</button>
           </div>
