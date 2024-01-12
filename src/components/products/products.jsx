@@ -8,6 +8,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import { useQuery } from 'react-query';
+import ProductPlaceholder from './../placeholders/productPlaceholder';
 
 export default function Products({ title }) {
   const { data:products, isLoading, isError } = useQuery(
@@ -74,14 +75,16 @@ export default function Products({ title }) {
           перейти в каталог
         </Link>
       </div>
-      <Slider {...settings}>
-        {products.map((product) => (
-          <ProductsItem key={product.id} product={product} />
-        ))}
 
-      </Slider>
-
-      {/*<Loader/>*/}
+      {isLoading
+        ? <ProductPlaceholder itemsCount={5}/>
+        : <Slider {...settings}>
+            {products.map((product) => (
+              <ProductsItem key={product.id} product={product} />
+            ))}
+          </Slider>
+      }
+      
     </div>
   );
 }

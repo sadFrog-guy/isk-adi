@@ -11,7 +11,6 @@ import { LightTooltip } from "../LightTooltip/LightTooltip";
 const ProductsItem = ({ product }) => {
   const navigate = useNavigate();
   const [isHeartActive, setHeartActive] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const {
     preventContextMenu,
@@ -39,17 +38,14 @@ const ProductsItem = ({ product }) => {
             </div>
             {product.image !== null ? (
                 <img
-                    onLoad={() => setLoading(false)}
                     onClick={navigateToDetail}
                     src={product.image}
                     alt={product.name}
                     style={{position: !product.image ? '' : 'absolute'}}
                 />
             ) : (
-                <IconProductDefault onLoad={() => setLoading(false)} onClick={navigateToDetail} />
+                <IconProductDefault onClick={navigateToDetail} />
             )}
-
-            {loading && <div className='blank' onClick={navigateToDetail}/>}
           </div>
           <h3 onClick={navigateToDetail}>{product.name}</h3>
           <h2>
