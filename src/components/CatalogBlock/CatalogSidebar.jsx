@@ -6,8 +6,8 @@ import "rc-slider/assets/index.css";
 import { useQuery } from "react-query";
 import api from './../../services/api/index';
 
-const CatalogSidebar = ({ title, display, setShow }) => {
-  const {id} = useParams()
+const CatalogSidebar = ({ title, display }) => {
+  const { id } = useParams()
   const [openCategories, setOpenCategories] = useState([]);
   const [price, setPrice] = useState([0, 100]);
   const [aPriceRange, aPSetPriceRange] = useState([0, 100]);
@@ -15,24 +15,19 @@ const CatalogSidebar = ({ title, display, setShow }) => {
   const handleSliderChange = (value) => {
     aPSetPriceRange(value);
   };
-  
-  
-  const { data:products, isLoading, isError } = useQuery(
-    'products',
+
+
+  const { data: products, isLoading, isError } = useQuery(
+    ['products', id],
     () => api.get(`/api/getProducts?categoryId=${id}&page=1&limit=20`).then((res) => res.data.objects),
     { enabled: true }
   );
-  const categories = []
-  console.log(products);
-  // const products = useSelector((state) => state.products.data);
-
-  // const categories = useSelector((state) => state.categories.data);
-  // const {
-  //   categories: { getCategories },
-  // } = useDispatch();
-  // useEffect(() => {
-  // getCategories();
-  // }, []);
+  const { data: categories } = useQuery(
+    'categories',
+    () => api.get(`/api/getCategories`).then((res) => res.data.objects),
+    { enabled: true }
+  );
+  // console.log(categories, '<= categories, products =>', products);
 
   const toggleCategory = (_id) => {
     if (openCategories.includes(_id)) {
@@ -42,7 +37,7 @@ const CatalogSidebar = ({ title, display, setShow }) => {
     }
   };
 
-  const filteredCategories = categories.filter(
+  const filteredCategories = categories?.filter(
     (category) =>
       !category.parent &&
       categories.some((subCategory) => subCategory.parent === category._id)
@@ -57,10 +52,7 @@ const CatalogSidebar = ({ title, display, setShow }) => {
     }
   }, [products]);
 
-  // products.forEach((dsd) => {
-  //   console.log(dsd);
-  // });
-  // console.log(categories);
+  
   return (
     <div
       className="category-sidebar"
@@ -72,31 +64,30 @@ const CatalogSidebar = ({ title, display, setShow }) => {
 
       <div className="category-sidebar_blocks">
         <div className="category-sidebar_block">
-          {filteredCategories.map((category) => (
+          {filteredCategories?.map((category) => {
+          return (
             <div className="block-item" key={category._id}>
               {!category.parent && (
                 <button onClick={() => toggleCategory(category._id)}>
                   {category.name} <IcoArrow />
                 </button>
               )}
-              <ul className={openCategories.includes(category._id) ? "open" : "closed"}>
+              <ul className={openCategories?.includes(category._id) ? "open" : "closed"}>
                 {categories
                   .filter((subCategory) => subCategory.parent === category._id)
                   .map((subCategory) => (
                     <li
                       key={subCategory._id}
-                      onClick={() => {
-                        setShow();
-                      }}
+                      onClick={() => {}}
                     >
-                      <Link to={`/category/${subCategory._id}`}>
+                      <Link to={`/catalog/category/${subCategory._id}`}>
                         {subCategory.name}
                       </Link>
                     </li>
                   ))}
               </ul>
             </div>
-          ))}
+          )})}
         </div>
         <div className="slider">
           <h4>По цене</h4>

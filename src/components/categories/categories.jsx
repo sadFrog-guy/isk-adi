@@ -33,9 +33,14 @@ const Categories = () => {
       </div>
       <div className='categories-items'>
         {sortedCategories.length > 0 &&
-          sortedCategories.map((category) => (
-            <CategoriesItem key={category._id} category={category} />
-          ))}
+          sortedCategories.map((category) => {
+            console.log(category);
+            return (
+              <Link to={'/catalog/category/' + category._id} key={category._id}>
+                <CategoriesItem category={category} />
+              </Link>
+            )
+          })}
       </div>
     </div>
   );

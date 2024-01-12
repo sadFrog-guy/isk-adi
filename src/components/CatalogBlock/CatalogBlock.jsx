@@ -20,23 +20,42 @@ const CatalogBlock = () => {
   }, [categories]);
 
   return (
-    <div className='categories container'>
-      <div className='categories-title'>
+    <div className='catalogBlock container'>
+      <div className='catalogBlock-title'>
         <h2>Выберите категорию</h2>
         <div className='catalogBlock-title_right'>
           Бишкек
           <img src={catalogLocation} alt='image' />
         </div>
       </div>
-      <div className='categories-items'>
-        {sortedCategories.length > 0 &&
-          sortedCategories.map((category) => (
-            <Link to={'/catalog/category/' + category._id} key={category._id}>
-              <CategoriesItem key={category._id} category={category} />
-            </Link>
-          ))}
+      <div className='catalogBlock-content'>
+        <div className='catalogBlock-items'>
+          {sortedCategories.length > 0 &&
+            sortedCategories.map((category) => (
+              <Link to={'/catalog/category/' + category._id} key={category._id}>
+                <CategoriesItem key={category._id} category={category} />
+              </Link>
+            ))}
+        </div>
       </div>
     </div>
+    // <div className='categories container'>
+    //   <div className='categories-title'>
+    //     <h2>Выберите категорию</h2>
+    //     <div className='catalogBlock-title_right'>
+    //       Бишкек
+    //       <img src={catalogLocation} alt='image' />
+    //     </div>
+    //   </div>
+    //   <div className='categories-items'>
+    //     {sortedCategories.length > 0 &&
+    //       sortedCategories.map((category) => (
+    //         <Link to={'/catalog/category/' + category._id} key={category._id}>
+    //           <CategoriesItem key={category._id} category={category} />
+    //         </Link>
+    //       ))}
+    //   </div>
+    // </div>
   );
 };
 

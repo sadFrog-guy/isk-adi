@@ -12,7 +12,7 @@ import ProductsItem from "../products/productsItem";
 export default function CatalogProducts({ title }) {
   const { id } = useParams()
   const { data: products, isLoading, isError } = useQuery(
-    'products',
+    ['products', id],
     () => api.get(`/api/getProducts?categoryId=${id}&page=1&limit=20`).then((res) => res.data.objects),
     { enabled: true }
   );
@@ -55,6 +55,10 @@ export default function CatalogProducts({ title }) {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
+  if (isLoading) {
+    return <div className="loader-wrapper"><Loader/></div>
+  }
+
   return (
     <div className="catalogProducts container">
       <div className="catalogProducts-title">
@@ -69,36 +73,42 @@ export default function CatalogProducts({ title }) {
       </div>
       <div className="catalogProducts-content">
         <div className="catalogProducts-items">
-          {currentProducts?.map((product) => (
+          {currentProducts.length ? currentProducts?.map((product) => (
             <ProductsItem key={product.id} product={product} />
-          ))}
+          )) :
+          <p>Товаров пока нет</p>
+        }
         </div>
 
-        <div className="pagination">
-          <button onClick={prevPage} disabled={currentPage === 1}>
-            <img src={arrowL} alt="ico" />
-          </button>
-          {Array.from(
-            { length: Math.ceil(products?.length / productsPerPage) },
-            (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => paginate(index + 1)}
-                className={currentPage === index + 1 ? "active" : ""}
-              >
-                {index + 1}
+        {
+          Math.ceil(products?.length / productsPerPage) > 1 && (
+            <div className="pagination">
+              <button onClick={prevPage} disabled={currentPage === 1}>
+                <img src={arrowL} alt="ico" />
               </button>
-            )
-          )}
-          <button
-            onClick={nextPage}
-            disabled={
-              currentPage === Math.ceil(products?.length / productsPerPage)
-            }
-          >
-            <img src={arrowR} alt="ico" />
-          </button>
-        </div>
+              {Array.from(
+                { length: Math.ceil(products?.length / productsPerPage) },
+                (_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => paginate(index + 1)}
+                    className={currentPage === index + 1 ? "active" : ""}
+                  >
+                    {index + 1}
+                  </button>
+                )
+              )}
+              <button
+                onClick={nextPage}
+                disabled={
+                  currentPage === Math.ceil(products?.length / productsPerPage)
+                }
+              >
+                <img src={arrowR} alt="ico" />
+              </button>
+            </div>
+          )
+        }
       </div>
     </div>
   );
