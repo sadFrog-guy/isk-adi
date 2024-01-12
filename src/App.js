@@ -11,7 +11,7 @@ import DetailOfProduct from './pages/DetailOfProduct';
 import Plug from './Plug';
 import useCheckMobileScreen from "./hooks/useCheckMobileScreen";
 import PersonalAccountMobile from "./components/myAccountMobile/PersonalAccountMobile";
-
+  
 function App() {
   const isMobile = useCheckMobileScreen();
 
