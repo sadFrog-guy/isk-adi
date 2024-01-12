@@ -19,40 +19,53 @@ export default function Products({ title }) {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error :</p>;
 
-  var settings = {
-    dots: false,
+  const settings = {
+    dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1500,
     slidesToShow: 5,
-    slidesToScroll: 1,
-    arrows: true,
+    slidesToScroll: 5,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    cssEase: "linear",
+    // nextArrow: <SampleNextArrow />,
+    // prevArrow: <SamplePrevArrow />,
     responsive: [
-      {
-        breakpoint: 1100,
-        settings: {
-          slidesToShow: 4,
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4,
+                infinite: true,
+                dots: true
+            }
         },
-      },
-      {
-        breakpoint: 860,
-        settings: {
-          slidesToShow: 3,
+        {
+            breakpoint: 900,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+            }
         },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
+        {
+            breakpoint: 770,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                centerMode: false,
+                dots: false
+            }
         },
-      },
-      {
-        breakpoint: 390,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: false
+            }
+        }
+    ]
+};
   return (
     <div className='products container'>
       <div className='products-title'>
