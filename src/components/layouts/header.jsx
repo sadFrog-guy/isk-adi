@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoSmall from "../icons/logoSmall";
 import { ReactComponent as ProfileSVG } from "../icons/profile.svg";
 import { ReactComponent as Market } from "../icons/market.svg";
@@ -14,20 +14,27 @@ import CatalogSidebar from "../CatalogBlock/CatalogSidebar";
 import {useDispatch, useSelector} from "react-redux";
 
 const Header = () => {
+  const navigate = useNavigate()
   const { setLoginWithPhone, setLoginWithEmail } = UseEnterShow();
   const [searchResults, setSearchResults] = useState([]);
   const [loginModal, setLoginModal] = useState("");
   const location = useLocation();
   const [isShowSidebar, setIsShowSideBar] = useState(false);
   const dispatch = useDispatch();
-  const { cart } = useSelector(state => state.cart);
+  const { cart, user } = useSelector(state => state.cart);
 
-  console.log(cart)
 
   function setShow() {
     setIsShowSideBar(!isShowSidebar);
   }
 
+  const handleClickProfile = () => {
+    if (!user.name) {
+      handleLoginClick()
+      return
+    }
+    navigate('/my-account')
+  }
   const OpenLoginWithPhone = () => {
     location.pathname = "/login";
     setLoginWithPhone(true);
@@ -86,9 +93,9 @@ const Header = () => {
                 <p>Добро пожаловать</p>
                 <span>Вход/Регистирация</span>
               </div>
-              <Link to="my-account">
+              <div onClick={handleClickProfile}>
                 <ProfileSVG />
-              </Link>
+              </div>
             </div>
             <div
               className={`header-left_login-modal ${loginModal ? "open" : ""}`}

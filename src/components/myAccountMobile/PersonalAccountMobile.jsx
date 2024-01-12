@@ -8,9 +8,11 @@ import TermsUse from "../myAccount/pages/TermsUse";
 import ProfileMobile from "./pages/ProfileMobile";
 import ProfileEditMobile from "./pages/ProfileEditMobile";
 import NavBarMobile from "../NavBarMobile/NavBarMobile";
+import { useSelector } from 'react-redux';
 
 const PersonalAccountMobile = () => {
   const current = useLocation();
+  const {user} = useSelector(state => state.cart)
   const [isProfile, setIsProfile] = useState(false);
 
   useEffect(() => {

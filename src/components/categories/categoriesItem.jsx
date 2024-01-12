@@ -1,7 +1,6 @@
 import React from 'react';
 
 const CategoriesItem = ({ category }) => {
-  console.log(category)
 
   return (
     <div className='categories-item'>

@@ -1,0 +1,10 @@
+{isLoading
+        ? <ProductPlaceholder itemsCount={5}/>
+        : <Slider {...settings}>
+            {products.map((product) => (
+              <ProductsItem key={product.id} product={product} />
+            ))}
+          </Slider>
+      }
+
+

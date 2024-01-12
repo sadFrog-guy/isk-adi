@@ -23,6 +23,7 @@ const DetailOfProduct = () => {
         () => api.get(`/api/getProduct/${id}`).then((res) => res.data.object),
         { enabled: true }
     );
+    console.log(product);
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [id])
@@ -80,7 +81,7 @@ const DetailOfProduct = () => {
                         }
                         <p>Комплекты:</p>
                         <div className="complects scrollbar_primary">
-                            {product?.productSet ? complects.map((el, index) => (
+                            {product?.productSet?.length ? complects.map((el, index) => (
                                 <div
                                     key={index}
                                     className="complect"

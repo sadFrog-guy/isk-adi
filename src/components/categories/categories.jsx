@@ -14,17 +14,12 @@ const Categories = () => {
   useEffect(() => {
     getCategories();
   }, []);
-  console.log(categories);
 
   useEffect(() => {
     setSortedCategories(
       categories.filter((category) => category.img !== '').slice(0, 14)
     );
   }, [categories]);
-
-  const handleCategory = () => {
-    
-  }
 
   return (
     <div className='categories container'>
@@ -38,7 +33,6 @@ const Categories = () => {
       <div className='categories-items'>
         {sortedCategories.length > 0 &&
           sortedCategories.map((category) => {
-            console.log(category);
             return (
               <Link to={'/catalog/category/' + category._id} key={category._id}>
                 <CategoriesItem category={category} />
