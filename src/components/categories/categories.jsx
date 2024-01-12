@@ -22,6 +22,10 @@ const Categories = () => {
     );
   }, [categories]);
 
+  const handleCategory = () => {
+    
+  }
+
   return (
     <div className='categories container'>
       <div className='categories-title'>
