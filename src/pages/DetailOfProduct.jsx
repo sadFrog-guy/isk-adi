@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ReactComponent as Minus } from "../components/icons/minus.svg"
 import { ReactComponent as Plus } from "../components/icons/plus.svg"
 import { ReactComponent as Heart } from "../components/icons/heart.svg"
@@ -14,6 +14,7 @@ import "../styles/components/DetailOfProduct.scss"
 import { useParams } from "react-router"
 import { useQuery } from "react-query"
 import api from "../services/api"
+import Loader from './../components/Loader/Loader';
 
 const DetailOfProduct = () => {
     const { id } = useParams()
@@ -22,12 +23,14 @@ const DetailOfProduct = () => {
         () => api.get(`/api/getProduct/${id}`).then((res) => res.data.object),
         { enabled: true }
     );
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [id])
     const [checked, setChecked] = useState(false)
     const Check = () => {
         setChecked(!checked)
     }
-    console.log(product)
+
     const complect = {
         img: img2,
         title: "Зеркало Анталия (3 полки) (Дуб Крафт Бел) 500*700 (Four) Стандарт Анталия (3 полк..",
@@ -100,37 +103,44 @@ const DetailOfProduct = () => {
                         </div>
                     </div>
                     <div className="fourth-c">
-                        <div className="top">
-                            <p>
-                                <span className="discount">{product?.promoPrice > 0 ? product?.promoPrice + 'c' : ''}</span>
-                                <span className={"price"}>
-                                    {product?.promoPrice > 0 ? 
-                                    <s>{product?.price} с</s> :
-                                    <b>{product?.price} с</b> 
-                                }
-                                </span>
-                            </p>
-                            <p className="articul">Артикул: ZGW131240</p>
-                            <div className="line"></div>
-                            <div className="lists">
-                                <ul>
-                                    <li style={{ color: !product?.active && '#df5333' }} className="first-li">
-                                        {product?.active ? 'В наличии' : 'нет в наличии'}
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li className="second-li">Комплект</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="bottom">
-                            <div className="quantity">
-                                <Minus />
-                                <h2>10</h2>
-                                <Plus />
-                            </div>
-                            <button className="toBasket">В корзину</button>
-                        </div>
+                        {
+                            isLoading ?
+                                <p className="loader-wrapper">
+                                    <Loader />
+                                </p>
+                                :
+                                <> <div className="top">
+                                    <p>
+                                        <span className="discount">{product?.promoPrice > 0 ? product?.promoPrice + 'c' : ''}</span>
+                                        <span className={"price"}>
+                                            {product?.promoPrice > 0 ?
+                                                <s>{product?.price} с</s> :
+                                                <b className="noDiscount">{product?.price} с</b>
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="articul">Артикул: ZGW131240</p>
+                                    <div className="line"></div>
+                                    <div className="lists">
+                                        <ul>
+                                            <li style={{ color: !product?.active && '#df5333' }} className="first-li">
+                                                {product?.active ? 'В наличии' : 'нет в наличии'}
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li className="second-li">Комплект</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                    <div className="bottom">
+                                        <div className="quantity">
+                                            <Minus />
+                                            <h2>10</h2>
+                                            <Plus />
+                                        </div>
+                                        <button className="toBasket">В корзину</button>
+                                    </div> </>
+                        }
                     </div>
                 </div>
                 <div className="description">

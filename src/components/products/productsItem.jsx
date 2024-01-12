@@ -32,7 +32,7 @@ const ProductsItem = ({ product }) => {
 
   return (
       <>
-        <div className='products-item' onClick={() => window.scrollTo(0,0)}>
+        <div className='products-item'>
           <div className='products-item_imgdiv'>
             <div className='heart' onClick={HandleHeartClick}>
               {isHeartActive ? <HeartFilled/> : <Heart />}

@@ -16,7 +16,12 @@ export default function CatalogProducts({ title }) {
     () => api.get(`/api/getProducts?categoryId=${id}&page=1&limit=20`).then((res) => res.data.objects),
     { enabled: true }
   );
-
+  
+  const { data: category} = useQuery(
+    ['category', id],
+    () => api.get(`/api/getCategory/${id}`).then((res) => res.data.object),
+    { enabled: true }
+  );
 
   const [sortOrder, setSortOrder] = useState("desc");
   const sortedProducts = useMemo(() => {
@@ -62,7 +67,7 @@ export default function CatalogProducts({ title }) {
   return (
     <div className="catalogProducts container">
       <div className="catalogProducts-title">
-        <h2>{title}</h2>
+        <h2>{category?.name || title}</h2>
         <p className="catalogProducts-sorted" onClick={toggleSortOrder}>
           Сортировать по: &nbsp;
           <span>
