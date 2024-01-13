@@ -7,9 +7,12 @@ import { ReactComponent as HeartFilled } from '../icons/heart_filled.svg';
 import { useNavigate } from 'react-router-dom';
 import useCart from "../../hooks/useCart";
 import { LightTooltip } from "../LightTooltip/LightTooltip";
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductsItem = ({ product }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const {favourites} = useSelector(store => store.favourites)
   const [isHeartActive, setHeartActive] = useState(false);
 
   const {
@@ -22,7 +25,12 @@ const ProductsItem = ({ product }) => {
   } = useCart(product);
 
   const HandleHeartClick = () => {
-    setHeartActive(!isHeartActive)
+    // setHeartActive(!isHeartActive)
+    dispatch.favourites.addToFavourites(product)
+    console.log(favourites);
+  }
+  const isFavourite = () => {
+    return favourites?.filter(prod => prod._id !== product._id).length > 0
   }
 
   const navigateToDetail = () => {
@@ -34,7 +42,7 @@ const ProductsItem = ({ product }) => {
         <div className='products-item'>
           <div className='products-item_imgdiv'>
             <div className='heart' onClick={HandleHeartClick}>
-              {isHeartActive ? <HeartFilled/> : <Heart />}
+              {isFavourite() ? <HeartFilled/> : <Heart />}
             </div>
             {product.image !== null ? (
                 <img

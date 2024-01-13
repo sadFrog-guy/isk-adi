@@ -21,7 +21,6 @@ const cart = {
       const newCart = state.cart.filter(item => {
         return item.product._id !== product.product._id
       })
-
       return {
         ...state,
         cart: newCart
@@ -43,15 +42,13 @@ const cart = {
             count: item.count + 1
           };
         }
-
         return item;
       });
-    
       return {
         ...state,
         cart: updatedCart
       };
-    },  
+    },
 
     decrement: (state, product) => {
       const updatedCart = state.cart.map(item => {
@@ -61,32 +58,29 @@ const cart = {
             count: item.count - 1
           };
         }
-
         return item;
       });
-    
+
       return {
         ...state,
         cart: updatedCart
       };
     },
-    
-    
+
     countPrices: (state) => {
       const prices = state.cart.map(item => {
-        if(item.count > 1)
+        if (item.count > 1)
           return item.product.price * item.count
         else {
           return item.product.price
         }
       }); // Extract prices from each item
       const sumOfPrices = prices.reduce((a, b) => a + b, 0); // Sum up the prices
-    
       return {
         ...state,
         prices: sumOfPrices
       };
-    }, 
+    },
 
     // WHEN API WILL RETURN IMAGES I WILL ADD THIS
     // countImages: (state) => {
@@ -98,19 +92,19 @@ const cart = {
     countLenString: (state) => {
       const lastDigit = state.cart.length % 10;
       const lastTwoDigits = state.cart.length % 100;
-    
+
       if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
-        return {...state, lenString: `${state.cart.length} товаров`};
+        return { ...state, lenString: `${state.cart.length} товаров` };
       }
-    
+
       if (lastDigit === 1) {
-        return {...state, lenString: `${state.cart.length} товар`};
+        return { ...state, lenString: `${state.cart.length} товар` };
       }
-    
+
       if (lastDigit >= 2 && lastDigit <= 4) {
-        return {...state, lenString: `${state.cart.length} товара`};
+        return { ...state, lenString: `${state.cart.length} товара` };
       }
-    
+
       return {
         ...state,
         lenString: `${state.cart.length} товаров`
@@ -120,7 +114,7 @@ const cart = {
     countLen: (state) => {
       return {
         ...state,
-        len: state.cart.length 
+        len: state.cart.length
       }
     },
 

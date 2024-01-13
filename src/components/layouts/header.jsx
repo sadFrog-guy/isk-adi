@@ -30,11 +30,8 @@ const Header = () => {
   }
 
   const handleClickProfile = () => {
-    if (!user.name) {
-      handleLoginClick()
-      return
-    }
-    navigate('/my-account')
+    if (user?.name) return navigate('/my-account');
+    handleLoginClick()
   }
   const OpenLoginWithPhone = () => {
     location.pathname = "/login";
@@ -87,10 +84,14 @@ const Header = () => {
             <div className="header-left_login">
               <div
                 className="header-left_block-text"
-                onClick={handleLoginClick}
+                onClick={user?.name ? () =>{} : handleLoginClick}
               >
                 <p>Добро пожаловать</p>
-                <span>Вход/Регистирация</span>
+                {
+                  !user?.name ? 
+                   <span>Вход/Регистирация</span> :
+                   <span>{user?.name}</span>
+                }
               </div>
               <div onClick={handleClickProfile}>
                 <ProfileSVG />

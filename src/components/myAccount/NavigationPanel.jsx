@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import * as Icons from '../icons/myAccount';
+import { useDispatch } from 'react-redux';
 
 const NavigationPanel = () => {
+  const dispatch = useDispatch()
+  const [logout, setLogout] = useState(false)
   const navLinksFirst = [
     {
       icon: Icons.ProfileIcon,
@@ -31,6 +34,12 @@ const NavigationPanel = () => {
       href: '/my-account/terms-use',
     },
   ];
+  function handleLogout() {
+    dispatch.cart.afterLoginUser({})
+  }
+  function toggleAskLogout() {
+    setLogout(prev => !prev)
+  }
 
   return (
     <div className='my_account_navigation'>
@@ -48,19 +57,31 @@ const NavigationPanel = () => {
             </div>
 
             {item.fav_count &&
-                <div className='fav_count'>
-                  {item.fav_count}
-                </div>
+              <div className='fav_count'>
+                {item.fav_count}
+              </div>
             }
           </NavLink>
         ))}
       </div>
       <div className='my_account_navigation_block'>
-        <button className='my_account_navigation_block_link logout_button'>
+        <button onClick={toggleAskLogout} className='my_account_navigation_block_link logout_button'>
           <img src={Icons.LogoutIcon} alt='LogoutIcon' />
           Выйти
         </button>
+        {logout && (
+          <div className='ask'>
+            <p>Вы действительно хотите выйти?</p>
+            <div className='btns'>
+              <button className='clear' onClick={handleLogout}>Выйти</button>
+              <button className='cencel' onClick={toggleAskLogout}>
+                Остаться
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+
     </div>
   );
 };

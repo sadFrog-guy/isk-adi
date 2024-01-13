@@ -19,7 +19,6 @@ const Reset = () => {
   const [verifySuccess, setVerifySuccess] = useState(false);
   const [userData, setUserData] = useState({
     phone: null,
-    email: '',
   });
   const showToast = (msg) => {
     toast.current.show({ severity: 'info', summary: 'Info', detail: msg });
@@ -59,7 +58,7 @@ const Reset = () => {
   };
   
   const ClickEnterBtn = () => {
-    regenerateSmsCode(userData)
+    regenerateSmsCode({phone: userData.phone})
       .then(res => {
         console.log(res);
         showToast(res?.data?.msg)

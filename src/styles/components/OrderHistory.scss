@@ -13,7 +13,19 @@
       display: flex;
       align-items: center;
       gap: 25px;
-
+      @media (max-width: 340px) {
+        flex-direction: column;
+      }
+      .datepicker input{
+        padding: 6px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--light-grey, #ddd);
+        background: #fff;
+        gap: 15px;
+        margin: 10px 0 50px 0;
+        position: relative;
+        width: 140px;
+      }
       .date {
         padding: 6px 10px;
         border-radius: 10px;
