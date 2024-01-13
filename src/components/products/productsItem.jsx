@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { ReactComponent as IconProductDefault } from '../icons/product-default.svg';
 import { ReactComponent as Plus } from '../icons/plus.svg';
 import { ReactComponent as Minus } from '../icons/minus.svg';
@@ -13,7 +13,6 @@ const ProductsItem = ({ product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const {favourites} = useSelector(store => store.favourites)
-  const [isHeartActive, setHeartActive] = useState(false);
 
   const {
     preventContextMenu,
@@ -24,13 +23,12 @@ const ProductsItem = ({ product }) => {
     countCart
   } = useCart(product);
 
-  const HandleHeartClick = () => {
-    // setHeartActive(!isHeartActive)
-    dispatch.favourites.addToFavourites(product)
-    console.log(favourites);
-  }
   const isFavourite = () => {
-    return favourites?.filter(prod => prod._id !== product._id).length > 0
+    return favourites?.filter(prod => prod._id === product._id).length > 0
+  }
+  const HandleHeartClick = () => {
+    if (isFavourite()) return dispatch.favourites.removeFromFavourites(product._id)      
+    dispatch.favourites.addToFavourites(product)
   }
 
   const navigateToDetail = () => {
@@ -49,7 +47,7 @@ const ProductsItem = ({ product }) => {
                     onClick={navigateToDetail}
                     src={product.image}
                     alt={product.name}
-                    style={{position: !product.image ? '' : 'absolute'}}
+                    // style={{position: !product.image ? '' : 'absolute'}}
                 />
             ) : (
                 <IconProductDefault onClick={navigateToDetail} />

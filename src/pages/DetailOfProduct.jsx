@@ -17,9 +17,13 @@ import { useQuery } from "react-query"
 import api from "../services/api"
 import Loader from './../components/Loader/Loader';
 import useCart from "../hooks/useCart";
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 const DetailOfProduct = () => {
     const { id } = useParams()
+    const dispatch = useDispatch()
+    const {favourites} = useSelector(store => store.favourites)
     const { data: product, isLoading, isError } = useQuery(
         ['product', id],
         () => api.get(`/api/getProduct/${id}`).then((res) => res.data.object),
@@ -42,6 +46,14 @@ const DetailOfProduct = () => {
         countCart
       } = useCart(product);
 
+      const isFavourite = () => {
+        return favourites?.filter(prod => prod._id === product?._id).length > 0
+      }
+      const HandleHeartClick = () => {
+        if (isFavourite()) return dispatch.favourites.removeFromFavourites(product?._id)      
+        dispatch.favourites.addToFavourites(product)
+      }
+      
     const complect = {
         img: img2,
         title: "Зеркало Анталия (3 полки) (Дуб Крафт Бел) 500*700 (Four) Стандарт Анталия (3 полк..",
@@ -74,10 +86,10 @@ const DetailOfProduct = () => {
                                 className="second-c__image"
                             />
                             <div
-                                onClick={() => { }}
+                                onClick={HandleHeartClick}
                                 className="heart"
                             >
-                                {false ? <ActiveHeart /> : <Heart />}
+                                {isFavourite() ? <ActiveHeart /> : <Heart />}
                             </div>
                         </div>
                     </div>
