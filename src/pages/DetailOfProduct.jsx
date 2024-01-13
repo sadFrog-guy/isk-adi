@@ -4,6 +4,7 @@ import { ReactComponent as Plus } from "../components/icons/plus.svg"
 import { ReactComponent as Heart } from "../components/icons/heart.svg"
 import { ReactComponent as BrokeImage } from "../components/icons/brokeImage.svg"
 import { ReactComponent as ActiveHeart } from "../components/icons/activeHeart.svg"
+import { LightTooltip } from "../components/LightTooltip/LightTooltip"
 import { Skeleton } from 'primereact/skeleton';
 import Products from "../components/products/products"
 
@@ -15,6 +16,7 @@ import { useParams } from "react-router"
 import { useQuery } from "react-query"
 import api from "../services/api"
 import Loader from './../components/Loader/Loader';
+import useCart from "../hooks/useCart";
 
 const DetailOfProduct = () => {
     const { id } = useParams()
@@ -31,6 +33,14 @@ const DetailOfProduct = () => {
     const Check = () => {
         setChecked(!checked)
     }
+    const {
+        preventContextMenu,
+        handleContextMenu,
+        RemoveFromBasket,
+        AddToBasket,
+        isAdded,
+        countCart
+      } = useCart(product);
 
     const complect = {
         img: img2,
@@ -134,12 +144,26 @@ const DetailOfProduct = () => {
                                     </div>
                                 </div>
                                     <div className="bottom">
-                                        <div className="quantity">
-                                            <Minus />
-                                            <h2>10</h2>
-                                            <Plus />
+                                        <div className='quantity'>
+                                            <div
+                                                className='mathDiv'
+                                                onClick={RemoveFromBasket}
+                                                onContextMenu={preventContextMenu}
+                                            >
+                                            <Minus/>
+                                            </div>
+                                            <div>{countCart}</div>
+                                            <LightTooltip title="Нажмите ПКМ чтобы добавить товар в корзину" arrow placement="top">
+                                            <div
+                                                className={`mathDiv ${isAdded ? 'added' : ''}`}
+                                                onClick={AddToBasket}
+                                                onContextMenu={handleContextMenu}
+                                            >
+                                                <Plus />
+                                            </div>
+                                            </LightTooltip>
                                         </div>
-                                        <button className="toBasket">В корзину</button>
+                                        <button className="toBasket" onClick={handleContextMenu}>В корзину</button>
                                     </div> </>
                         }
                     </div>

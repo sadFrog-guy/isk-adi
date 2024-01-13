@@ -14,7 +14,6 @@ const BasketItem = ({ el }) => {
     preventConextMenu,
     handleContextMenu,
     RemoveFromBasket,
-    AddToBasket,
     isAdded,
   } = useCart(el.product);
 
@@ -46,7 +45,7 @@ const BasketItem = ({ el }) => {
 
               <div
                   className='opt third'
-                  onClick={() => dispatch.cart.removeFromCart(el.product._id)}
+                  onClick={() => dispatch.cart.removeFromCart(el)}
               >
                 Удалить
               </div>
@@ -63,7 +62,7 @@ const BasketItem = ({ el }) => {
         <div className='quantity'>
           <div
               className='mathDiv'
-              onClick={RemoveFromBasket}
+              onClick={() => dispatch.cart.decrement(el)}
               onContextMenu={preventConextMenu}
           >
             <Minus/>
@@ -71,7 +70,7 @@ const BasketItem = ({ el }) => {
           <div className='quantity'>{el.count}</div>
           <div
               className={`mathDiv ${isAdded ? 'added' : ''}`}
-              onClick={AddToBasket}
+              onClick={() => dispatch.cart.increment(el)}
               onContextMenu={handleContextMenu}
           >
             <Plus />

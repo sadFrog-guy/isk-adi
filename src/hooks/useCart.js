@@ -25,18 +25,20 @@ const useCart = (product) => {
   const handleContextMenu = (e) => {
     e.preventDefault()
 
-    setAdded(true)
+    if (countCart > 0) {
+      setAdded(true)
 
-    dispatch.cart.addToCart({
-      product,
-      count: countCart
-    })
+      dispatch.cart.addToCart({
+        product,
+        count: countCart
+      })
 
-    setCountCart(0)
+      setCountCart(0)
 
-    setTimeout(() => {
-      setAdded(false)
-    }, 2000)
+      setTimeout(() => {
+        setAdded(false)
+      }, 2000)
+    }
   }
 
   const preventConextMenu = (e) => {

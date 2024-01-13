@@ -11,11 +11,9 @@ import DetailOfProduct from './pages/DetailOfProduct';
 import Plug from './Plug';
 import useCheckMobileScreen from "./hooks/useCheckMobileScreen";
 import PersonalAccountMobile from "./components/myAccountMobile/PersonalAccountMobile";
-import { useSelector } from 'react-redux';
 
 function App() {
   const isMobile = useCheckMobileScreen();
-  const {user} = useSelector(state => state.cart)
 
   return (
     <Layout>
@@ -27,11 +25,7 @@ function App() {
         <Route path='/catalog/category/:id' element={<CategoryPage />} />
         <Route path='/addresses' element={<Addresses />} />
         <Route path='/basket' element={<Basket />} />
-        {
-          user.name ?
-          <Route path='/my-account/*' element={isMobile ? <PersonalAccountMobile/> : <PersonalAccount />} /> :
-          <Route path='/my-account/*' element={<Main />}/>
-        }
+        <Route path='/my-account/*' element={isMobile ? <PersonalAccountMobile/> : <PersonalAccount />} />
         <Route path='/product/:id' element={<DetailOfProduct />} />
       </Routes>
     </Layout>

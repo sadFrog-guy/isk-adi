@@ -31,6 +31,10 @@
     gap: 8px;
     display: flex;
     flex-wrap: wrap;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   &-item {
@@ -67,6 +71,7 @@
       max-height: 100px;
       border-radius: 0 0 10px 10px;
     }
+
   }
   &-item:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -98,4 +103,24 @@
     width: 15px;
     height: 10px;
   }
+}
+
+.mathDiv > svg:hover {
+  border-radius: 1000px;
+
+  rect {
+    fill: #004f86;
+  }
+
+  path {
+    fill: #fff;
+  }
+}
+
+.mathDiv.added > svg > rect {
+  fill: #73cb5e;
+}
+
+.mathDiv.added > svg > path {
+  fill: #fff;
 }
