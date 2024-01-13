@@ -17,6 +17,11 @@ const BasketItem = ({ el }) => {
     isAdded,
   } = useCart(el.product);
 
+  const handlePriceAndCount = () => {
+    dispatch.cart.increment(el)
+    dispatch.cart.countPrices()
+  }
+
   return (
     <div className='item'>
       <div className='top'>
@@ -70,7 +75,7 @@ const BasketItem = ({ el }) => {
           <div className='quantity'>{el.count}</div>
           <div
               className={`mathDiv ${isAdded ? 'added' : ''}`}
-              onClick={() => dispatch.cart.increment(el)}
+              onClick={handlePriceAndCount}
               onContextMenu={handleContextMenu}
           >
             <Plus />
