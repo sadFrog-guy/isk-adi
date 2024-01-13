@@ -150,7 +150,26 @@
         rect {
           fill: #fff;
         }
+
+
       }
+
+      .mathDiv > svg:hover > rect {
+        fill: #004f86;
+      }
+      
+      .mathDiv > svg:hover > path {
+        fill: #fff;
+      }
+      
+      .mathDiv.added > svg > rect {
+        fill: #73cb5e;
+      }
+      
+      .mathDiv.added > svg > path {
+        fill: #fff;
+      }
+
       svg:active {
         border-radius: 1000px;
         rect {
@@ -286,4 +305,20 @@
     align-items: center;
     overflow: hidden;
   }
+}
+
+.mathDiv > svg:hover > rect {
+  fill: #004f86;
+}
+
+.mathDiv > svg:hover > rect {
+  fill: #fff;
+}
+
+.mathDiv.added > svg > rect {
+  fill: #73cb5e;
+}
+
+.mathDiv.added > svg > path {
+  fill: #fff;
 }

@@ -11,10 +11,27 @@ const cart = {
   },
   reducers: {
     addToCart: (state, { product, count }) => {
-      return {
-        ...state,
-        cart: [...state.cart, { product, count }]
-      }
+      const existingProductIndex = state.cart.findIndex(item => item.product._id === product._id);
+
+    if (existingProductIndex !== -1) {
+      // Product already exists, update the count
+      const updatedCart = [...state.cart];
+      updatedCart[existingProductIndex] = {
+        ...updatedCart[existingProductIndex],
+        count: updatedCart[existingProductIndex].count + count
+    };
+
+    return {
+      ...state,
+      cart: updatedCart
+    };
+  } else {
+    // Product doesn't exist, add a new entry
+    return {
+      ...state,
+      cart: [...state.cart, { product, count }]
+    };
+  }
     },
 
     removeFromCart: (state, product) => {

@@ -279,7 +279,24 @@
             font-weight: 500;
             line-height: normal;
           }
+
+          .mathDiv > svg:hover > rect {
+            fill: #004f86;
+          }
+          
+          .mathDiv > svg:hover > path {
+            fill: #fff;
+          }
+          
+          .mathDiv.added > svg > rect {
+            fill: #73cb5e;
+          }
+          
+          .mathDiv.added > svg > path {
+            fill: #fff;
+          }
         }
+
         .toBasket {
           width: 100%;
           padding: 10px 0;

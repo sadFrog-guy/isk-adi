@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CategoriesItem from './categoriesItem';
 import searchIco from '../icons/Search.svg';
 import { Link } from 'react-router-dom';
+import CategoryPlaceholder from '../placeholders/categoryPlaceholder';
 
 const Categories = () => {
   const [sortedCategories, setSortedCategories] = useState([]);
@@ -31,14 +32,16 @@ const Categories = () => {
         <input type='text' placeholder='Искать товар...' />
       </div>
       <div className='categories-items'>
-        {sortedCategories.length > 0 &&
-          sortedCategories.map((category) => {
+        {sortedCategories.length > 0
+          ? sortedCategories.map((category) => {
             return (
               <Link to={'/catalog/category/' + category._id} key={category._id}>
                 <CategoriesItem category={category} />
               </Link>
             )
-          })}
+          })
+          : <CategoryPlaceholder itemsCount={7}/>
+        }
       </div>
     </div>
   );

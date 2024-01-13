@@ -194,14 +194,6 @@ $animation-duration: 2s;
         }
       }
 
-      .mathDiv.added > svg > rect {
-        fill: #73cb5e;
-      }
-
-      .mathDiv.added > svg > path {
-        fill: #fff;
-      }
-
       .mathDiv {
         height: 44px;
         transition: all .2s;
@@ -268,4 +260,21 @@ $animation-duration: 2s;
     padding: 0;
     margin: 30px 0;
   }
+}
+
+
+.mathDiv > svg:hover > rect {
+  fill: #004f86;
+}
+
+.mathDiv > svg:hover > rect {
+  fill: #fff;
+}
+
+.mathDiv.added > svg > rect {
+  fill: #73cb5e;
+}
+
+.mathDiv.added > svg > path {
+  fill: #fff;
 }
