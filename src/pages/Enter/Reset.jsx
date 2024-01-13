@@ -2,34 +2,45 @@ import React, { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as IconLogo } from '../../components/icons/Group.svg';
-import { ReactComponent as IconUser } from '../../components/icons/User.svg';
-import { ReactComponent as IconLocation } from '../../components/icons/Location-i.svg';
 import { UseEnterShow } from '../../context/EnterContext';
 import PasswordInput from '../../components/PasswordInput/PasswordInput';
 import EmailInput from '../../components/EmailInput/EmailInput';
 import PhoneInput from 'react-phone-number-input';
 import Verification from '../../components/UI/Verification/Verification';
-import { registerByEmail, verifyClients } from '../../services/api';
+import { regenerateSmsCode, verifyClients } from '../../services/api';
 import './Enter.scss';
 import { useDispatch } from 'react-redux';
 
-const Register = () => {
-  const { register, HandleEndAuth, ShowLoginPhone } = UseEnterShow();
+const Reset = () => {
+  const { resetWithPhone, HandleEndAuth, ShowLoginPhone } = UseEnterShow();
   const navigate = useNavigate();
   const toast = useRef(null);
   const [verify, setVerify] = useState(false);
   const [verifySuccess, setVerifySuccess] = useState(false);
   const [userData, setUserData] = useState({
-    name: '',
     phone: null,
-    location: '',
     email: '',
-    password: '',
   });
+  const showToast = (msg) => {
+    toast.current.show({ severity: 'info', summary: 'Info', detail: msg });
+  };
   // verify
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
+
   
+  const handleChange = (e, type) => {
+    if (type === 'phone') {
+      setUserData({ ...userData, [type]: e }); return
+    }
+    const { value } = e.target;
+    setUserData({ ...userData, [type]: value })
+  };
+  
+  const handleGoHome =() => {
+    HandleEndAuth()
+    navigate('/home')
+  }
   const handleCodeSubmit = async (code) => {
     if (isLoading) return;
     verifyClients({phone: userData.phone, code: code})
@@ -46,85 +57,43 @@ const Register = () => {
       setIsLoading(false);
     })
   };
-  // verify
-
-  const showToast = (msg) => {
-    toast.current.show({ severity: 'info', summary: 'Info', detail: msg });
-  };
-  const handleGoHome =() => {
-    HandleEndAuth()
-    navigate('/home')
-  }
-  const handleChange = (e, type) => {
-    if (type === 'phone') {
-      setUserData({ ...userData, [type]: e }); return
-    }
-    const { value } = e.target;
-    setUserData({ ...userData, [type]: value })
-  };
-
-  const isVariable = () => {
-    const { name, phone, location, email, password } = userData
-    return (name && phone && location && email && password)
-  };
-
-  // Verifying
+  
   const ClickEnterBtn = () => {
-    registerByEmail(userData)
+    regenerateSmsCode(userData)
       .then(res => {
         console.log(res);
         showToast(res?.data?.msg)
         setVerify(true)
       })
       .catch(({ response }) => {
+        console.log(response, userData);
         showToast(response?.data?.msg || response?.data?.error);
         const { errors } = response?.data
         errors?.phone &&
           showToast(errors?.phone);
-        errors?.name &&
-          showToast(errors?.name);
         errors?.email &&
           showToast(errors?.email);
-        errors?.password &&
-          showToast(errors?.password);
       })
   };
-  const ClickEnterBtnAfterVerify = () => {
-    HandleEndAuth()
-    navigate('/my-account', { replace: true });
-    setVerify(false);
-  };
-
 
   return (
-    register && (
+    resetWithPhone && (
       <div className='wrapper'>
         <Toast ref={toast} />
         <div className='register-container'>
           {!verify ? (
-            <div className='container-register'>
+            <div className='container'>
               <h1 onClick={handleGoHome} className='headline'>
                 <IconLogo />
               </h1>
               <div className='line'></div>
               <div className='description'>
-                <h2 className='desc'>Регистрация</h2>
+                <h2 className='desc'>Восстановление пароля</h2>
                 <p className='desc-sec'>
-                  Введите свои данные, чтобы зарегистрироваться
+                    Введите свой телефон, который указывали при регистрации
                 </p>
               </div>
               <form >
-
-                <div className='input'>
-                  <label htmlFor='name' className='label'>
-                    ФИО
-                  </label>
-                  <IconUser />
-                  <input id='name' name='name' type='text'
-                    placeholder='Ваше ФИО'
-                    onChange={(e) => handleChange(e, 'name')}
-                  />
-                </div>
 
                 <div className='input'>
                   <label htmlFor='phone' className='label'>
@@ -141,38 +110,13 @@ const Register = () => {
                     onChange={(e) => handleChange(e, 'phone')}
                   />
                 </div>
-
-                <div className='input'>
-                  <label htmlFor='location' className='label'>
-                    Город
-                  </label>
-                  <IconLocation />
-                  <input
-                    id='location'
-                    name='location'
-                    type='text'
-                    placeholder='Бишкек'
-                    onChange={(e) => handleChange(e, 'location')}
-                  />
-                </div>
-                <EmailInput handleChange={handleChange} />
-                <PasswordInput
-                  handleChange={handleChange}
-                  label={'Создайте пароль'}
-                  addition={' '}
-                />
-                <PasswordInput
-                  handleChange={handleChange}
-                  label={'Повторите пароль'}
-                  addition={' '}
-                />
                 <div className='bottom-form'>
                   <button type='button'
-                    className={!isVariable() ? 'disabled' : 'button'}
-                    disabled={!isVariable()}
+                    className={!userData.phone ? 'disabled' : 'button'}
+                    disabled={!userData.phone}
                     onClick={ClickEnterBtn}
                   >
-                    Зарегистрироваться
+                    Отправить SMS код
                   </button>
                 </div>
               </form>
@@ -201,9 +145,9 @@ const Register = () => {
                 <button type='button'
                   className={!verifySuccess ? 'disabled' : 'button'}
                   disabled={!verifySuccess}
-                  onClick={ClickEnterBtnAfterVerify}
+                  onClick={'ClickEnterBtnAfterVerify'}
                 >
-                  Зарегистрироваться
+                  Подтвердрить
                 </button>
               </div>
               <p className='registration-link' onClick={ShowLoginPhone}>
@@ -217,4 +161,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Reset;

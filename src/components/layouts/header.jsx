@@ -12,10 +12,11 @@ import { UseBasket } from "../../context/BasketContext";
 import { UseEnterShow } from "../../context/EnterContext";
 import CatalogSidebar from "../CatalogBlock/CatalogSidebar";
 import {useDispatch, useSelector} from "react-redux";
+import { useCountdown } from "../../hooks/useTimer";
 
 const Header = () => {
   const navigate = useNavigate()
-  const { setLoginWithPhone, setLoginWithEmail } = UseEnterShow();
+  const { ShowLoginPhone, ShowLoginEmail } = UseEnterShow();
   const [searchResults, setSearchResults] = useState([]);
   const [loginModal, setLoginModal] = useState("");
   const location = useLocation();
@@ -23,8 +24,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const { cart, user } = useSelector(state => state.cart);
 
-
-  function setShow() {
+  // const {leftSec, start, restart} = useCountdown(45)
+  function ShowCategoriesMobile() {
     setIsShowSideBar(!isShowSidebar);
   }
 
@@ -37,13 +38,11 @@ const Header = () => {
   }
   const OpenLoginWithPhone = () => {
     location.pathname = "/login";
-    setLoginWithPhone(true);
-    setLoginWithEmail(false);
+    ShowLoginPhone()
   };
   const OpenLoginWithEmail = () => {
     location.pathname = "/login";
-    setLoginWithEmail(true);
-    setLoginWithPhone(false);
+    ShowLoginEmail()
   };
 
   useEffect(() => {
@@ -133,7 +132,7 @@ const Header = () => {
           <div
             className="header-burger"
             onClick={() => {
-              setShow();
+              ShowCategoriesMobile();
             }}
           >
             <span className="header-burger_line"></span>
@@ -142,7 +141,7 @@ const Header = () => {
       </div>
 
       {isShowSidebar ? (
-        <CatalogSidebar display={isShowSidebar} setShow={setShow} />
+        <CatalogSidebar display={isShowSidebar} setShow={ShowCategoriesMobile} />
       ) : null}
     </>
   );

@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
   const isAccountPage = location.pathname.includes('my-account');
-  const { loginWithPhone, loginWithEmail, register } = UseEnterShow();
+  const { loginWithPhone, loginWithEmail, register, resetWithPhone, resetWithEmail } = UseEnterShow();
 
   useEffect(() => {
     if (loginWithPhone || loginWithEmail) {
@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
     }
   }, [loginWithPhone, loginWithEmail, register]);
 
-  if (loginWithPhone || loginWithEmail || register) {
+  if (loginWithPhone || loginWithEmail || register || resetWithPhone || resetWithEmail) {
     return (
       <div className={'loginnig'}>
         <Enter />
