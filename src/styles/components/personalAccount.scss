@@ -1,3 +1,17 @@
+@mixin base-btn {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  border: 0.333px solid var(--Separators-Non-opaque, rgba(60, 60, 67, 0.36));
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 13px 0;
+  cursor: pointer;
+}
 .my_account {
   display: flex;
   justify-content: space-between;
@@ -18,6 +32,7 @@
     .my_account_navigation_block {
       width: 100%;
       display: flex;
+      position: relative;
       flex-direction: column;
       align-items: flex-start;
 
@@ -49,7 +64,7 @@
         }
 
         &.active {
-          color: #2C7EB8;
+          color: #2c7eb8;
         }
 
         &.logout_button {
@@ -66,9 +81,9 @@
         .fav_count {
           font-size: 15px;
           font-weight: 400;
-          font-family: 'Gilroy-Regular';
-          color: #0063A9;
-          background: #D7EEFE;
+          font-family: "Gilroy-Regular";
+          color: #0063a9;
+          background: #d7eefe;
           border-radius: 50%;
           width: 18px;
           height: 18px;
@@ -76,6 +91,50 @@
           justify-content: center;
           align-items: center;
           justify-self: flex-end;
+        }
+      }
+      .ask {
+        width: 270px;
+        position: absolute;
+        bottom: 130px;
+        left: 0;
+        border-radius: 14px;
+        background: #f2faff;
+        backdrop-filter: blur;
+        box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.15);
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        p {
+          text-align: center;
+          color: var(--Labels-Primary, #000);
+          font-size: 17px;
+          font-weight: 600;
+          border-bottom: 1px solid #9b9b9b;
+          padding: 15px;
+          margin: 0;
+          margin-bottom: -2px;
+        }
+        .btns {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: 1fr;
+          grid-column-gap: 0px;
+          grid-row-gap: 0px;
+          width: 100%;
+          .clear {
+            @include base-btn;
+            color: var(--red, #f91616);
+            border: none;
+            border-right: 1px solid #9b9b9b;
+          }
+          .cencel {
+            @include base-btn;
+            color: var(--main-color, #0063a9);
+            border: none;
+          }
         }
       }
     }
@@ -92,7 +151,7 @@
         font-size: 25px;
         font-style: normal;
         font-weight: 600;
-        font-family: 'Gilroy-bold', sans-serif;
+        font-family: "Gilroy-bold", sans-serif;
         line-height: normal;
         width: 40%;
       }
@@ -121,13 +180,16 @@
               height: 80px;
               border-radius: 50%;
             }
+            .inputAvatar{
+              display: none;
+            }
 
             .upload_button {
               background: transparent;
               outline: none;
               border: none;
               color: #2c7eb8;
-              font-family: 'Gilroy-Regular', sans-serif;
+              font-family: "Gilroy-Regular", sans-serif;
               font-size: 15px;
               font-style: normal;
               font-weight: 600;
@@ -139,19 +201,22 @@
           .bonus_indebtedness {
             display: flex;
             justify-content: center;
-            align-items: baseline;
             gap: 11px;
             .block {
               padding: 15px;
               border-radius: 5px;
               background: #fff;
+              display: flex;
+              flex-direction: column;
+              flex-grow: 1;
               .title {
                 margin: 0;
                 padding: 0;
                 color: #000;
-                font-family: 'Gilroy-Medium', sans-serif;
+                font-family: "Gilroy-Medium", sans-serif;
                 font-size: 14px;
                 font-style: normal;
+                margin-bottom: auto;
                 font-weight: 500;
                 line-height: normal;
               }
@@ -294,7 +359,7 @@
               gap: 13.06px;
               padding-right: 11.96px;
               margin-right: 10px;
-              border-right: 1px solid #DDDDDD;
+              border-right: 1px solid #dddddd;
             }
 
             .input_wrap__flex > .icon {

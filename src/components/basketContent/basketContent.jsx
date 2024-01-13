@@ -4,13 +4,17 @@ import BasketItem from '../UI/BasketItem/BasketItem.jsx';
 import Ava from '../icons/Кухонные.svg';
 import '../../styles/components/basket.scss';
 import { UseBasket } from '../../context/BasketContext.jsx';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UseEnterShow } from './../../context/EnterContext';
+import { useLocation } from 'react-router-dom';
 
 const BasketContent = () => {
+  const { ShowLoginPhone } = UseEnterShow();
   const dispatcher = useDispatch();
-  const { cart, prices, len, lenString } = useSelector(state => state.cart);
+  const { cart, user, prices, len, lenString } = useSelector(state => state.cart);
   const [click, setclick] = useState(false);
 
+  const location = useLocation();
   useEffect(() => {
     dispatcher.cart.countPrices()
     dispatcher.cart.countLenString()
@@ -29,6 +33,14 @@ const BasketContent = () => {
     closeAsk()
 
     dispatcher.cart.removeAllCart()
+  }
+  function handleOrder(params) {
+    if (!user?.name) {
+      location.pathname = "/login";
+      ShowLoginPhone()
+    } else {
+      alert('заказ')
+    }
   }
 
   return (
@@ -101,7 +113,7 @@ const BasketContent = () => {
               <span className='third'>Общая сумма:</span>
               <span className='fourth'>{prices} сом</span>
             </p>
-            <button>Оформить заказ</button>
+            <button onClick={handleOrder}>Оформить заказ</button>
           </div>
         </div>
       </div>

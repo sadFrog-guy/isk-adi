@@ -11,6 +11,7 @@ import 'react-phone-number-input/style.css';
 import './Enter.scss';
 import { Toast } from 'primereact/toast';
 import { loginClientEmail, loginClientPhone } from '../../services/api';
+import { useDispatch } from 'react-redux';
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -19,46 +20,49 @@ const LogIn = () => {
     loginWithPhone,
     loginWithEmail,
     register,
-    setLoginWithPhone,
-    setLoginWithEmail,
-    setRegister,
+    ShowRegister,
+    HandleEndAuth,
   } = UseEnterShow();
-  const ShowRegister = () => {
-    setLoginWithPhone(false);
-    setLoginWithEmail(false);
-    setRegister(true);
-  };
   const [password, setPassword] = useState('');
   const [userDataPhone, setUserDataPhone] = useState(null);
   const [userDataEmail, setUserDataEmail] = useState(null);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [loginWithPhone, loginWithEmail]);
+
+  // const ShowRegister = () => {
+  // };
 
   const showToast = (msg) => {
     toast.current.show({ severity: 'info', summary: 'Info', detail: msg });
   };
-  const handleChangeUser = (e) => {
+  const handleChangeUserInfo = (e) => {
     if (loginWithEmail) {
-      setUserDataEmail(e.target.value); return
+      setUserDataEmail(e.target.value);
+      return
     }
     setUserDataPhone(e);
   };
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   }
-
   const isVariable = () => {
     if (!password) return false
     return (loginWithEmail && userDataEmail) || (loginWithPhone && userDataPhone)
   };
+
   const close = (path) => {
-    setLoginWithPhone(false);
-    setLoginWithEmail(false);
+    HandleEndAuth()
     navigate(path, { replace: true });
   }
-
   const ClickEnterBtn = () => {
     if (loginWithPhone) {
       loginClientPhone({ phone: userDataPhone, password })
-        .then(res => close('/my-account'))
+        .then(res => {
+          close('/my-account');
+          dispatch.cart.afterLoginUser(res.data.client)
+        })
         .catch(err => {
           showToast(err?.response?.data?.msg)
           console.log(err)
@@ -66,13 +70,13 @@ const LogIn = () => {
       return
     }
     loginClientEmail({ email: userDataEmail, password })
-      .then(res => close('/my-account'))
+      .then(res => {
+        dispatch.cart.afterLoginUser(res.data.client)
+        close('/my-account')
+      })
       .catch(err => showToast(err?.response?.data?.msg))
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [loginWithPhone, loginWithEmail]);
 
   return register ? (
     <Register />
@@ -90,7 +94,7 @@ const LogIn = () => {
           </div>
 
           <form>
-            {loginWithEmail && <EmailInput handleChange={handleChangeUser} />}
+            {loginWithEmail && <EmailInput handleChange={handleChangeUserInfo} />}
             {loginWithPhone && (
               <div className='input'>
                 <label htmlFor='phoneNumber' className='label'>
@@ -103,12 +107,12 @@ const LogIn = () => {
                   displayInitialValueAsLocalNumber
                   withCountryCallingCode
                   initialValueFormat='national'
-                  onChange={handleChangeUser}
+                  onChange={handleChangeUserInfo}
                 />
               </div>
             )}
 
-            <PasswordInput handleChange={handleChangePassword} />
+            <PasswordInput handleChange={handleChangePassword}  />
 
             <div className='bottom-form'>
               <div className='remember'>

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { ReactComponent as Eye } from '../../components/icons/Eye.svg';
 import { ReactComponent as OpenEye } from '../../components/icons/OpenEye.svg';
 import { ReactComponent as Key } from '../../components/icons/Key.svg';
+import { UseEnterShow } from '../../context/EnterContext';
 
 const PasswordInput = ({ handleChange, label, addition }) => {
+  const { ShowResetPhone } = UseEnterShow()
   const [shownPassword, setShownPassword] = useState(false);
   const handleShow = () => {
     setShownPassword(!shownPassword);
@@ -25,7 +27,7 @@ const PasswordInput = ({ handleChange, label, addition }) => {
       ) : (
         <Eye onClick={handleShow} />
       )}
-      <p className='passwrd-sec'>{addition ? addition : 'Забыли пароль?'}</p>
+      <p onClick={ShowResetPhone} className='passwrd-sec'>{addition ? addition : 'Забыли пароль?'}</p>
     </div>
   );
 };

@@ -6,13 +6,13 @@ const OrderItem = ({icon, el}) => {
         <div className='user'>
           {icon}
           <div className='user__name'>
-            <p>{el.name}</p>
-            <span>{el.name}</span>
+            <p>{el.clientName}</p>
+            <span>{el.clientName}</span>
           </div>
         </div>
-        <h3>{el.price}</h3>
+        <h3>{el.sum} {el.currency}</h3>
         <div className='button_wrap'>
-          <button className={el.btn.class}>{el.btn.text}</button>
+          <button className={'first'}>{el.stateName}</button>
         </div>
       </div>
   );
