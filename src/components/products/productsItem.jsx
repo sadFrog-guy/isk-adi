@@ -20,6 +20,7 @@ const ProductsItem = ({ product }) => {
     handleContextMenu,
     RemoveFromBasket,
     AddToBasket,
+    quantityLimit,
     isAdded,
     countCart
   } = useCart(product);

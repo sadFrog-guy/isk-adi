@@ -1,0 +1,203 @@
+.manage_orders {
+    display: flex;
+    gap: 20px;
+
+    .right {
+        width: 30%; 
+
+        .form {
+            background: #fff;
+            width: 100%;
+            padding: 17px 18px;
+            border-radius: 8px;
+
+            &_label {
+                font-size: 14px;
+                font-weight: 400;
+                font-weight: 'Gilroy-Regular';
+                color: #888888;
+                margin-bottom: 4px;
+            }
+
+            &_select {
+                width: 100%;
+                background: #F6F6F6;
+                border-radius: 8px;
+                position: relative;
+
+                &.active {
+                    background: #fff;
+                    border: 1px solid #DDDDDD;
+                    border-bottom: none;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                &__top {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-right: 14px;
+                }
+
+                &__bottom {
+                    background: #fff;
+                    border: 1px solid #DDDDDD;
+                    width: 100%;
+                    height: 100px;
+                    position: absolute;
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+
+                    &.loading {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+
+                &__input {
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    padding: 10px 12px;
+                }
+            }
+        }
+    }
+
+    .left {
+        width: 70%;
+
+        .add_product_select {
+            width: 100%;
+            background: #fff;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 12.78px;
+            font-weight: 500;
+            font-family: 'Gilroy-Medium';
+            cursor: pointer;
+        }
+
+        .table {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 60px;
+
+            .table_heading {
+                display: grid;
+                grid-template-columns: 10% 42.5% 23.5% 25%;
+                padding: 5px 14px;
+                font-size: 13px;
+                font-weight: 500;
+                font-family: 'Gilroy-Medium';
+                border-bottom: 1px solid #D2D2D2;
+                margin-bottom: 9px;
+            }
+
+            .table_item {
+                display: grid;
+                grid-template-columns: 10% 40% 25% 25%;
+                align-items: center;
+                padding: 8px 12px;
+                background: #fff;
+                border-radius: 10px;
+                position: relative;
+                margin-bottom: 7px;
+
+                &__image {
+                    width: 35px;
+                    height: 35px;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    > * {
+                        max-height: 100%;
+                    }
+                }
+
+                &__name {
+                    font-size: 13px;
+                    font-weight: 500;
+                    font-family: 'Gilroy-Medium';
+                }
+
+                &__quantity {
+                    display: flex;
+                    align-items: center;
+                    gap: 11px;
+
+                    > .mathDiv {
+                        width: 26px;
+                        height: 26px;
+
+                        > svg {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    > .mathDiv:hover > svg > rect {
+                        fill: #004f86;
+                    }
+                      
+                    > .mathDiv:hover > svg > path {
+                        fill: #fff;
+                    }
+                      
+                    > .mathDiv.added > svg > rect {
+                        fill: #73cb5e;
+                    }
+                      
+                    > .mathDiv.added > svg > path {
+                        fill: #fff;
+                    }
+                }
+
+                > svg {
+                    position: absolute;
+                    top: 50%;
+                    right: 18.5px;
+                    transform: translateY(-50%);
+                    fill: #FF0000;
+                }
+
+                &__price {
+                    font-size: 15px;
+                    font-weight: 700;
+                    font-family: 'Gilroy-bold'
+                }
+            }
+
+            .table_item:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .right {
+        width: 40%;
+    }
+}
+
+.heading {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Gilroy-Medium';
+    margin-bottom: 15px;
+}
+
+.subheading {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Gilroy-Regular';
+    color: #888888;
+    margin-bottom: 4px;
+}

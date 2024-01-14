@@ -35,13 +35,12 @@ const cart = {
     },
 
     removeFromCart: (state, product) => {
-      const newCart = state.cart.filter(item => {
-        return item.product._id !== product.product._id
-      })
+      const newCart = state.cart.filter(item => item.product._id !== product.product._id);
+
       return {
         ...state,
-        cart: newCart
-      }
+        cart: [...newCart]
+      };
     },
 
     removeAllCart: (state) => {
@@ -61,6 +60,7 @@ const cart = {
         }
         return item;
       });
+
       return {
         ...state,
         cart: updatedCart

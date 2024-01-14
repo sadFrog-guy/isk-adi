@@ -263,11 +263,11 @@ $animation-duration: 2s;
 }
 
 
-.mathDiv > svg:hover > rect {
+.mathDiv:hover > svg > rect {
   fill: #004f86;
 }
 
-.mathDiv > svg:hover > rect {
+.mathDiv:hover > svg > path {
   fill: #fff;
 }
 

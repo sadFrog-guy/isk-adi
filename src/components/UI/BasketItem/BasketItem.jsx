@@ -22,6 +22,8 @@ const BasketItem = ({ el }) => {
     dispatch.cart.countPrices()
   }
 
+  const handleDelete = () => dispatch.cart.removeFromCart(el)
+
   return (
     <div className='item'>
       <div className='top'>
@@ -50,7 +52,7 @@ const BasketItem = ({ el }) => {
 
               <div
                   className='opt third'
-                  onClick={() => dispatch.cart.removeFromCart(el)}
+                  onClick={handleDelete}
               >
                 Удалить
               </div>

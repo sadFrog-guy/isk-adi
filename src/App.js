@@ -11,6 +11,7 @@ import DetailOfProduct from './pages/DetailOfProduct';
 import Plug from './Plug';
 import useCheckMobileScreen from "./hooks/useCheckMobileScreen";
 import PersonalAccountMobile from "./components/myAccountMobile/PersonalAccountMobile";
+import ManageOrders from './pages/ManagerOrders';
 
 function App() {
   const isMobile = useCheckMobileScreen();
@@ -27,6 +28,7 @@ function App() {
         <Route path='/basket' element={<Basket />} />
         <Route path='/my-account/*' element={isMobile ? <PersonalAccountMobile/> : <PersonalAccount />} />
         <Route path='/product/:id' element={<DetailOfProduct />} />
+        <Route path='/manager' element={<ManageOrders />} />
       </Routes>
     </Layout>
   );
