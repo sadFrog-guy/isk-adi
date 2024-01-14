@@ -48,6 +48,7 @@ const getDisplayName = (name, state) => {
     product: 'Детали товара',
     login: 'Логин',
     register: 'Регистрация',
+    manager: 'Корзина менеджера'
   };
   return pathMapping[name.toLowerCase()] || name;
 };

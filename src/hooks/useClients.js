@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import api from '../services/api';
 
 export const fetchClients = () => {
-  return api.get('/api/getClients').then((res) => res.data.objects);
+  return api.get('/sklad/queryUsers?search').then((res) => res.data);
 }
 
 export const useClients = () => {
