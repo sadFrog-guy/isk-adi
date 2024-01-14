@@ -18,8 +18,6 @@ const ManageOrders = () => {
   const [searchClientResults, setSearchClientResults] = useState([]);
 
   const handleClientSelect = (e) => {
-    setSearchClientActive(true)
-
     const searchTerm = e.target.value.toLowerCase();
 
     const filteredResults = clients.filter((item) =>
@@ -30,7 +28,7 @@ const ManageOrders = () => {
 
     setSearchClientTerms(searchTerm)
 
-    if(filteredResults.length === 0) {
+    if(filteredResults.length) {
       setSearchClientResults(clients)
     } else {
       setSearchClientResults(filteredResults)
@@ -88,7 +86,7 @@ const ManageOrders = () => {
                         Выберите клиента
                     </p>
 
-                    <div className={`form_select ${isSearchClientActive ? 'active' : ''}`}>
+                    <div className={`form_select ${isSearchClientActive && searchClientResults.length > 0 ? 'active' : ''}`}>
                         <div className="form_select__top">
                             <input
                               type="text"
@@ -99,7 +97,7 @@ const ManageOrders = () => {
                               onBlur={handleClientBlur}
                             />
 
-                            {isSearchClientActive
+                            {isSearchClientActive && searchClientResults.length > 0
                               ? <XIcon/>
                               : <ArrowDown/>
                             }
@@ -108,7 +106,7 @@ const ManageOrders = () => {
                         <div 
                           className={`
                             form_select__bottom 
-                            ${isLoading ? 'loading' : ''}
+                            // ${isLoading ? 'loading' : ''}
                             ${isSearchClientActive && searchClientResults.length > 0 ? 'active' : ''}
                           `}
                         >
