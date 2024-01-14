@@ -18,6 +18,8 @@ const ManageOrders = () => {
   const [searchClientResults, setSearchClientResults] = useState([]);
 
   const handleClientSelect = (e) => {
+    setSearchClientActive(true)
+
     const searchTerm = e.target.value.toLowerCase();
 
     const filteredResults = clients.filter((item) =>

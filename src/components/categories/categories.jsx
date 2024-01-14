@@ -31,18 +31,19 @@ const Categories = () => {
         <img src={searchIco} alt='search' />
         <input type='text' placeholder='Искать товар...' />
       </div>
-      <div className='categories-items'>
         {sortedCategories.length > 0
-          ? sortedCategories.map((category) => {
-            return (
-              <Link to={'/catalog/category/' + category._id} key={category._id}>
-                <CategoriesItem category={category} />
-              </Link>
-            )
-          })
+          ? <div className='categories-items'>
+              {sortedCategories.map((category) => {
+                return (
+                  <Link to={'/catalog/category/' + category._id} key={category._id}>
+                    <CategoriesItem category={category} />
+                  </Link>
+                )
+              })}
+            </div>
           : <CategoryPlaceholder itemsCount={7}/>
         }
-      </div>
+        
     </div>
   );
 };
