@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import * as Icons from '../icons/myAccount';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavigationPanel = () => {
   const dispatch = useDispatch()
+  const {favourites} = useSelector(store => store.favourites)
   const [logout, setLogout] = useState(false)
   const navLinksFirst = [
     {
@@ -16,7 +17,7 @@ const NavigationPanel = () => {
       icon: Icons.HeartIcon,
       label: 'Избранные товары',
       href: '/my-account/favourites',
-      fav_count: 5
+      fav_count: favourites.length
     },
     {
       icon: Icons.ClockSquareIcon,

@@ -37,8 +37,8 @@ export const updatePasswordReset = async ({ newPassword, code }) => {
     return res
 }
 /// passwordResetSend одинаоквые?
-export const regenerateSmsCode = async ({phone}) => {
-    const res = instance_url.post('/client/regenerateSmsCode', {phone} )
+export const regenerateSmsCode = async (phone) => {
+    const res = instance_url.post('/client/regenerateSmsCode', phone )
     return res
 }
 export const loginClientPhone = async ({ phone, password }) => {
@@ -68,8 +68,8 @@ export const updatePasswordResetEmail = async ({ newPassword, code }) => {
     const res = instance_url.post('/client/updatePasswordEmail', { newPassword, code })
     return res
 }
-export const regenerateEmailCode = async ({email}) => {
-    const res = instance_url.post('/client/',  {email} )
+export const regenerateEmailCode = async (email) => {
+    const res = instance_url.post('/client/regenerateSmsCode',  email )
     return res
 }//
 export const loginClientEmail = async ({ email, password }) => {

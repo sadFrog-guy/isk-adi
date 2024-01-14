@@ -26,11 +26,11 @@ const Profile = () => {
   const [selectedGender, setSelectedGender] = useState(null);
   
   const { data: userBalance, isLoading, isError } = useQuery(
-    ['product', user?._id],
+    ['balance', user?._id],
     () => api.get(`/client/getClientBalance/${user?._id}`).then((res) => res.data.balance),
     { enabled: true }
     );
-    console.log(user);
+    // console.log(user);
 
   const onSubmit = (data) => {
     const formData = { ...data, sex: selectedGender };
@@ -69,7 +69,7 @@ const Profile = () => {
             <div className='block'>
               <h1 className='title'>Дебиторская задолженность</h1>
               <span className='line'></span>
-              <p className='som'>{ userBalance} c</p>
+              <p className='som'>{ userBalance < 0 ?  `-${userBalance}` : userBalance } c</p>
             </div>
           </div>
           <img className='qr_code' src={Icons.QrCodeIcon} alt='QR code' />
