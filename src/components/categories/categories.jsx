@@ -43,7 +43,6 @@ const Categories = () => {
             </div>
           : <CategoryPlaceholder itemsCount={7}/>
         }
-        
     </div>
   );
 };

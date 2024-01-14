@@ -109,7 +109,7 @@ const ManageOrders = () => {
                           className={`
                             form_select__bottom 
                             ${isLoading ? 'loading' : ''}
-                            ${isSearchClientActive ? 'active' : ''}
+                            ${isSearchClientActive && searchClientResults.length > 0 ? 'active' : ''}
                           `}
                         >
                           {isLoading
